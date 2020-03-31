@@ -1,0 +1,55 @@
+#title { 
+    text-align: center;
+}
+div {
+    margin:10px;
+    background-color:rgb(165, 87, 87);
+    align-items:center;
+}
+button {
+    margin: 5px;
+}
+
+
+#tabelNotes{
+    margin-top: 50px;
+    min-width: 400px;
+    margin: 10px;
+    align-content:center;
+    text-align: center;
+    align-self: center;
+}
+
+td, th {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+  }
+
+th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: center;
+    background-color: #4CAF50;
+    color: white;
+  }
+
+  
+#addName {width: 200px;}
+
+#addUser {
+    background: rgb(255, 255, 255);
+    padding: 10px;
+    width: 200px;
+ 
+    min-height: 50px;
+    align-self: center;
+    
+}
+
+#noteInput {
+    
+    margin:10px;
+    width:50%;
+    min-width: 300px;
+}
