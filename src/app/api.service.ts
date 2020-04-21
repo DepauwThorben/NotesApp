@@ -9,7 +9,7 @@ export class APIService {
   constructor(private http: HttpClient) { }
 
   getUsers = () => {
-     return this.http.get('https://jensjorisdecorte-backend-example-5.glitch.me/users');   
+     return this.http.get('https://backend-thorben.glitch.me/users');   
     
   }
 
@@ -17,7 +17,7 @@ export class APIService {
   
   AddUser = (name:string) => {
      let nameEncoded=encodeURIComponent(name);
-    let URI1= encodeURI('https://jensjorisdecorte-backend-example-5.glitch.me/add?name=')+nameEncoded;
+    let URI1= encodeURI('https://backend-thorben.glitch.me/add?name=')+nameEncoded;
     return this.http.get(URI1);
 
 
@@ -27,7 +27,7 @@ export class APIService {
     
     
     
-    let URI2=encodeURI('https://jensjorisdecorte-backend-example-5.glitch.me/addnote?name=');
+    let URI2=encodeURI('https://backend-thorben.glitch.me/addnote?name=');
     let nameEncoded=encodeURIComponent(name);
     console.log("naam: "+nameEncoded);
 
@@ -43,7 +43,7 @@ export class APIService {
 
   DeleteUserNote = (name:string) => {
     let nameEncoded=encodeURIComponent(name);
-    let encodedUri= encodeURI('https://jensjorisdecorte-backend-example-5.glitch.me/remove?name=')+nameEncoded;
+    let encodedUri= encodeURI('hhttps://backend-thorben.glitch.me/remove?name=')+nameEncoded;
     return this.http.get(encodedUri);
     
 
@@ -52,7 +52,7 @@ export class APIService {
   GetNotes = (name:string) => {
 
     let nameEncoded=encodeURIComponent(name);
-    let encodedUri= encodeURI('https://jensjorisdecorte-backend-example-5.glitch.me/notes?name=')+nameEncoded;
+    let encodedUri= encodeURI('https://backend-thorben.glitch.me/notes?name=')+nameEncoded;
     return this.http.get(encodedUri);
 
   }
