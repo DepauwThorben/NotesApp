@@ -14,6 +14,7 @@ interface Notes {
   id: number,
   content: string,
   userId: number,
+  categorie: string;
 }
 
 @Component({
@@ -30,22 +31,34 @@ export class AppComponent {
   noteList: Array<Notes>;
   service: APIService;
   displayedColumnsUsers: string[] = ["Name", "Note", "ShowAllNotes", "ButtonRemoveAll"]; 
-  displayedColumnsNotes: string[] = ["content"];
+  displayedColumnsNotes: string[] = ["content","categorie","EditNote","DeleteNote"];
  
+ 
+  
   insertAddedName: string;
   insertNameNote: string;
   addNote: string;
+  editNote: string;
+  searchNote: string;
+  categorie: string;
   isNoteAdded: boolean = false;
   showNotes: boolean = false;
   user: string;
   addNameMessage: string;
   addMessage:string;
   message;
-
+  editMessage: string;
   deleteUserMessage: string;
   isUserDeleted: boolean=false;
   addUser:boolean=false;
-
+  isNoteEdit:boolean=false;
+  noteId;
+  userId;
+  content:string;
+  editContent:string;
+  searchMessage:string;
+  searchContent:string;
+ 
   constructor(apiService: APIService) {
     this.service = apiService;
     apiService.getUsers().subscribe((data: Array<User>) => {
@@ -58,6 +71,11 @@ export class AppComponent {
     console.log(data);
     this.userList = data;
   });
+
+  NoteListRefresh = (naamAlleNotes:string) => this.service.GetNotes(naamAlleNotes).subscribe((data:Array<Notes>) => {
+    console.log(data);
+    this.noteList=data;
+}); 
 
   PopUpAdduser = () => {
     this.addUser=true;
@@ -104,7 +122,7 @@ export class AppComponent {
     
 
     console.log("Note toegevoegd");
-    this.service.AddNote(this.insertNameNote, this.addNote).subscribe((response) => {
+    this.service.AddNote(this.insertNameNote, this.addNote,this.categorie).subscribe((response) => {
       console.log(response);
       this.addMessage = JSON.stringify(response);
       this.message = JSON.parse(this.addMessage);
@@ -128,6 +146,7 @@ export class AppComponent {
 
   AddNoteComponentTabel = (naamaddNote: string) => {
     console.log("addNoteTabel: " + naamaddNote);
+    this.categorie = "Private"
     this.addMessage="";
     this.isNoteAdded = true;
     this.insertNameNote = naamaddNote;
@@ -166,12 +185,10 @@ export class AppComponent {
 
 
 
-  // NoteListRefresh = (naamAlleNotes:string) => this.service.GetNotes(naamAlleNotes).subscribe((data:Array<Notes>) => {
-  //     console.log(data);
-  //     this.noteList=data;
-  //  });
+   
 
-  GetNotesComponent = (naamAlleNotes: string) => {
+  GetNotesComponent = (naamAlleNotes: string,userId) => {
+    this.categorie = "null";
     console.log("toon alle Notes van:" + naamAlleNotes);
     this.service.GetNotes(naamAlleNotes).subscribe((data: Array<Notes>) => {
       console.log(data);
@@ -184,6 +201,106 @@ export class AppComponent {
       this.isUserDeleted=false;
       this.insertNameNote = "";
       this.addUser=false;
+      this.userId = userId;
+      this.isNoteEdit = false;
+      
+    });
+  }
+
+  EditNoteComponent = (content:string,categorie:string,id) =>  {  
+   
+    this.isNoteEdit = true;
+    console.log("editNoteTabel: " + id);
+    this.noteId = id;
+    this.content = content;
+    this.categorie = categorie;
+    this.addMessage="";
+    this.isNoteAdded = false;
+    this.insertNameNote = this.user;
+    this.showNotes = false;
+    this.isUserDeleted=false;
+    this.addUser=false;
+    this.addNameMessage = "";
+    this.editNote = content;
+
+  }
+
+  SearchListRefresh = (userId,content:string,categorie:string) => this.service.SearchNote(userId,content,categorie).subscribe((data:Array<Notes>) => {
+    console.log(data);
+    this.noteList=data;
+}); 
+  SearchNote = () =>
+  {
+    
+    
+        this.SearchListRefresh(this.userId,this.content,this.categorie);
+    
+        this.addNameMessage = "";
+        this.isNoteAdded = false;
+        this.isUserDeleted=false;
+        this.insertNameNote = "";
+        this.addUser=false;
+        this.isNoteEdit = false;
+      
+    
+  }
+
+  
+  EditNote = () =>
+  {
+
+   if(this.editNote == null)
+    {
+      this.editContent = this.content;
+    }
+    else{
+        this.editContent = this.editNote;
+    }
+
+
+    this.service.EditNote(this.noteId,this.editContent,this.categorie).subscribe((response) => {
+      this.deleteUserMessage = JSON.stringify(response);
+      this.message = JSON.parse(this.deleteUserMessage);
+      console.log("een response: " + this.message.success);
+      console.log(response);
+
+
+     
+
+      this.insertAddedName = "",
+      this.NoteListRefresh(this.user);
+      this.showNotes = true;
+      this.addNameMessage = "";
+      this.isNoteAdded = false;
+      this.addUser=false;
+      this.insertNameNote = "";
+      this.isUserDeleted=false;
+      this.isNoteEdit = false;
+    });
+  }
+   RemoveNote = (id) => {
+
+    this.service.DeleteNote(id).subscribe((response) => {
+      this.deleteUserMessage = JSON.stringify(response);
+      this.message = JSON.parse(this.deleteUserMessage);
+      console.log("een response: " + this.message.success);
+      console.log(response);
+
+
+      if (this.message.success == undefined) {
+        this.deleteUserMessage = this.message.error;
+      } else {
+        this.deleteUserMessage = this.message.success;
+      }
+
+      this.NoteListRefresh(this.user);
+      this.insertAddedName = "",
+      this.showNotes = true;
+      this.addNameMessage = "";
+      this.isNoteAdded = false;
+      this.addUser=false;
+      this.insertNameNote = "";
+      this.isUserDeleted=false;
     });
   }
 }

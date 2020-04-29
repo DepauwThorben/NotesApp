@@ -11,11 +11,14 @@ import {MaterialModule} from './material.module';
 import { FormsModule } from '@angular/forms';
 import {FlexLayoutModule} from '@angular/flex-layout';
 
+
+import {MatSelectModule} from '@angular/material/select'; 
 @NgModule({
   declarations: [
     AppComponent
   ],
   imports: [
+    MatSelectModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,

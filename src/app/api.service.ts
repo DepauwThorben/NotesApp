@@ -23,7 +23,7 @@ export class APIService {
 
   }
 
-  AddNote = (name:string, note:string) => {
+  AddNote = (name:string, note:string ,categorie:string) => {
     
     
     
@@ -35,7 +35,9 @@ export class APIService {
     let noteEncoded=encodeURIComponent(note);
     console.log("NoteEncoded: "+noteEncoded);
 
-    let encodedUri=URI2 + nameEncoded + URI3 + noteEncoded;
+    let URI4 = encodeURI('&categorie=');
+    let categorieEncoded = encodeURIComponent(categorie);
+    let encodedUri=URI2 + nameEncoded + URI3 + noteEncoded + URI4 + categorieEncoded;
     console.log(encodedUri)
     return this.http.get(encodedUri);
 
@@ -43,7 +45,7 @@ export class APIService {
 
   DeleteUserNote = (name:string) => {
     let nameEncoded=encodeURIComponent(name);
-    let encodedUri= encodeURI('hhttps://backend-thorben.glitch.me/remove?name=')+nameEncoded;
+    let encodedUri= encodeURI('https://backend-thorben.glitch.me/remove?name=')+nameEncoded;
     return this.http.get(encodedUri);
     
 
@@ -55,5 +57,56 @@ export class APIService {
     let encodedUri= encodeURI('https://backend-thorben.glitch.me/notes?name=')+nameEncoded;
     return this.http.get(encodedUri);
 
+  }
+
+  DeleteNote = (id) => {
+    let idEncoded=encodeURIComponent(id);
+    let encodedUri= encodeURI('https://backend-thorben.glitch.me/removeNote?id=')+idEncoded;
+    return this.http.get(encodedUri);
+    
+
+  }
+
+  EditNote = (id,content:string,categorie:string) =>
+  {
+    let URI5=encodeURI('https://backend-thorben.glitch.me/editNote?id=');
+    let idEncoded=encodeURIComponent(id);
+    console.log("id: "+idEncoded);
+
+    let URI6=encodeURI('&content=');
+    let contentEncoded=encodeURIComponent(content);
+    console.log("NoteEncoded: "+contentEncoded);
+
+    let URI7 = encodeURI('&categorie=');
+    let categorieEncoded = encodeURIComponent(categorie);
+    let encodedUri=URI5 + idEncoded + URI6 + contentEncoded + URI7 + categorieEncoded;
+    console.log(encodedUri)
+    return this.http.get(encodedUri);
+  }
+
+  SearchNote(userid,content:string,categorie:string)
+  {
+
+    let idEncoded=encodeURIComponent(userid);
+    let URI8=encodeURI('https://backend-thorben.glitch.me/zoekNote?userId=') + idEncoded;
+    
+
+    
+      
+      let contentEncoded=encodeURIComponent(content);
+      URI8 +=encodeURI('&content=') + contentEncoded;
+    
+    
+   
+
+   
+    let categorieEncoded = encodeURIComponent(categorie);
+     URI8 += encodeURI('&categorie=') + categorieEncoded;
+     
+    
+
+    let encodedUri= URI8;
+    console.log(encodedUri)
+    return this.http.get(encodedUri);
   }
 }
