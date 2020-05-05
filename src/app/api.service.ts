@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { keyframes } from '@angular/animations';
 
 @Injectable({
   providedIn: 'root'
@@ -91,12 +92,12 @@ export class APIService {
     let URI8=encodeURI('https://backend-thorben.glitch.me/zoekNote?userId=') + idEncoded;
     
 
-    
+    if( content != null){
       
       let contentEncoded=encodeURIComponent(content);
       URI8 +=encodeURI('&content=') + contentEncoded;
     
-    
+    }
    
 
    

@@ -188,7 +188,7 @@ export class AppComponent {
    
 
   GetNotesComponent = (naamAlleNotes: string,userId) => {
-    this.categorie = "null";
+    this.categorie = "NoCategorie";
     console.log("toon alle Notes van:" + naamAlleNotes);
     this.service.GetNotes(naamAlleNotes).subscribe((data: Array<Notes>) => {
       console.log(data);
@@ -232,7 +232,7 @@ export class AppComponent {
   SearchNote = () =>
   {
     
-    
+     
         this.SearchListRefresh(this.userId,this.content,this.categorie);
     
         this.addNameMessage = "";

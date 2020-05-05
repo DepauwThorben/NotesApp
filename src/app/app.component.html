@@ -34,7 +34,7 @@
 
 
                 <ng-container matColumnDef="ButtonRemoveAll">
-                    <th mat-header-cell width=200px text-align=center *matHeaderCellDef>&nbsp;&nbsp;&nbsp;&nbsp;Remove all</th>
+                    <th mat-header-cell width=200px text-align=center *matHeaderCellDef>&nbsp;&nbsp;&nbsp;&nbsp;Remove user</th>
                     <td mat-cell *matCellDef="let element"> <Button mat-raised-button
                             (click)="DeleteUserEnNoteComponent(element.name)">Remove 
                             {{element.name}}</Button>
@@ -51,7 +51,7 @@
         
 
         <div *ngIf="addUser">
-            <button mat-raised-button (click)="AddUserComponent()">Add a name: </button>
+            <button mat-raised-button (click)="AddUserComponent()">Add new user: </button>
             <mat-form-field id="addName" appearance="fill">
                 <mat-label>Give a name </mat-label>
                 <input matInput min="1" max="50" type="string" [(ngModel)]="insertAddedName" #ctrl="ngModel"
@@ -85,7 +85,7 @@
 
         <div  *ngIf="showNotes">
             <div>
-                <button mat-raised-button  (click)="SearchNote()">Search in notes from {{insertNameNote}} </button>
+                <button mat-raised-button  (click)="SearchNote()">Filter in notes from {{user}} </button>
     
                 <mat-form-field id="NoteInput"   appearance="fill">
                    
@@ -95,19 +95,20 @@
                 </mat-form-field>
     
                 <mat-form-field>
-                    <mat-label>categorie</mat-label>
+                    <mat-label>Categorie</mat-label>
                     <mat-select   [(ngModel)]="categorie">
                       <mat-option value="Private">Private</mat-option>
                       <mat-option value="Urgent">Urgent</mat-option>
-                      <mat-option value="Other">other</mat-option>
-                      <mat-option value="null">null</mat-option>
+                      <mat-option value="Other">Other</mat-option>
+                      <mat-option value="NoCategorie">All</mat-option>
                     </mat-select>
                   </mat-form-field>
 
-                  <button mat-raised-button  (click)="NoteListRefresh(user)">Show all notes</button>
+                
     
             </div>
            
+            <div>  <button mat-raised-button  (click)="NoteListRefresh(user)">Show all notes</button></div>
             <table id="tabelNotes" mat-table [dataSource]="noteList">
               
                
@@ -122,7 +123,7 @@
                 </ng-container>
 
                 <ng-container matColumnDef="categorie">
-                    <th mat-header-cell *matHeaderCellDef>  categorie </th>
+                    <th mat-header-cell *matHeaderCellDef>   Categorie </th>
                   
                     <td mat-cell *matCellDef="let element"> {{element.categorie}}</td>
                  
@@ -130,7 +131,7 @@
                 </ng-container>
 
                 <ng-container matColumnDef="EditNote">
-                    <th mat-header-cell *matHeaderCellDef> Notes from {{user}} </th>
+                    <th mat-header-cell *matHeaderCellDef> </th>
                   
                     <td mat-cell *matCellDef="let element"> <Button mat-raised-button
                         (click)="EditNoteComponent(element.content,element.categorie,element.id)">Edit</Button> </td>
@@ -138,7 +139,7 @@
                 </ng-container>
 
                 <ng-container matColumnDef="DeleteNote">
-                    <th mat-header-cell *matHeaderCellDef> Notes from {{user}} </th>
+                    <th mat-header-cell *matHeaderCellDef></th>
                   
                     <td mat-cell *matCellDef="let element"> <Button mat-raised-button
                         (click)="RemoveNote(element.id)">Remove</Button> </td>
